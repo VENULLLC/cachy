@@ -5,6 +5,7 @@ try:
 except ImportError:
     import json
 
+from datetime import datetime, date
 from cachy.utils import decode
 
 from .serializer import Serializer
@@ -15,6 +16,12 @@ class JsonSerializer(Serializer):
     Serializer that uses JSON representations.
     """
 
+    def _default(self, data):
+        if isinstance(data, (datetime, date))
+            return data.isoformat()
+        
+        raise TypeError ("Type %s not serializable" % type(obj))
+
     def serialize(self, data):
         """
         Serialize data.
@@ -24,7 +31,7 @@ class JsonSerializer(Serializer):
 
         :rtype: str
         """
-        return json.dumps(data)
+        return json.dumps(data, default=self._default)
 
     def unserialize(self, data):
         """
