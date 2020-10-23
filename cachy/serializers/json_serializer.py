@@ -16,11 +16,11 @@ class JsonSerializer(Serializer):
     Serializer that uses JSON representations.
     """
 
-    def _default(self, data):
-        if isinstance(data, (datetime, date))
-            return data.isoformat()
+    def _default(self, obj):
+        if isinstance(obj, (datetime, date)):
+            return obj.isoformat()
         
-        raise TypeError ("Type %s not serializable" % type(obj))
+        raise TypeError("Type {} not serializable".format(type(obj)))
 
     def serialize(self, data):
         """
