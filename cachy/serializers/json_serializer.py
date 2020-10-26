@@ -7,6 +7,7 @@ except ImportError:
 
 from datetime import datetime, date
 from cachy.utils import decode
+from uuid import UUID
 
 from .serializer import Serializer
 
@@ -19,6 +20,9 @@ class JsonSerializer(Serializer):
     def _default(self, obj):
         if isinstance(obj, (datetime, date)):
             return obj.isoformat()
+
+        if isinstance(obj, UUID):
+            return str(obj)
         
         raise TypeError("Type {} not serializable".format(type(obj)))
 
